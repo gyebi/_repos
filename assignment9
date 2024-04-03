@@ -1,0 +1,30 @@
+file_name = 'mbox-short.txt'
+
+# Dictionary to store counts of messages by hour
+hour_counts = {}
+
+try:
+    with open(file_name, 'r') as file:
+        for line in file:
+            if line.startswith('From '):
+                # Split the line by spaces and extract the time part
+                words = line.split()
+                time = words[5]
+                
+                # Split the time by colon to get the hour
+                hour = time.split(':')[0]
+
+                # Update the hour_counts dictionary
+                hour_counts[hour] = hour_counts.get(hour, 0) + 1
+
+    # Sort the hour_counts dictionary by hour
+    sorted_hour_counts = sorted(hour_counts.items())
+
+    # Print the counts sorted by hour
+    for hour, count in sorted_hour_counts:
+        print(hour, count)
+
+except FileNotFoundError:
+    print("File not found.")
+except Exception as e:
+    print("An error occurred:", e)
